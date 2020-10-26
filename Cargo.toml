@@ -1,0 +1,28 @@
+[package]
+name = "rit"
+version = "0.1.0"
+authors = ["Aphosis <aphosis.github@gmail.com>"]
+edition = "2018"
+description = "Manage multiple git repositories with ease."
+license = "MIT"
+homepage = "https://github.com/Aphosis/rit"
+repository = "https://github.com/Aphosis/rit"
+keywords = ["git", "dev"]
+categories = ["command-line-utilities", "development-tools"]
+
+[dependencies]
+config = "0.10.1"
+crc32fast = "1.2.1"
+dirs = "3.0.1"
+git2 = "0.13.12"
+glob = "0.3.0"
+lazy_static = "1.4.0"
+log = "0.4.11"
+pretty_env_logger = "0.4.0"
+regex = "1.4.1"
+serde = { version = "1.0.117", features = ["derive"] }
+serde_yaml = "0.8.13"
+structopt = "0.3.20"
+structopt-derive = "0.4.13"
+toml = "0.5.7"
+walkdir = "2.3.1"

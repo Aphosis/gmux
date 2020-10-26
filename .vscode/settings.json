@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "Backtrace",
+        "hasher",
+        "revparse",
+        "serde",
+        "structopt",
+        "subcommand",
+        "symlinks",
+        "walkdir"
+    ]
+}
