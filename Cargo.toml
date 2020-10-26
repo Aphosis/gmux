@@ -9,6 +9,9 @@ homepage = "https://github.com/Aphosis/rit"
 repository = "https://github.com/Aphosis/rit"
 keywords = ["git", "dev"]
 categories = ["command-line-utilities", "development-tools"]
+exclude = [
+    ".vscode/*",
+]
 
 [dependencies]
 colored = "2.0.0"
