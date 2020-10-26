@@ -91,10 +91,14 @@ fn main() {
                 },
             },
         },
-        ApplicationCommands::Command(command) => match command {
+        ApplicationCommands::Command {
+            exclude_filter,
+            filter,
+            command,
+        } => match command {
             GitCommand::Command(args) => match GitCaller::new(&settings) {
                 Ok(git) => {
-                    git.call(args).unwrap();
+                    git.call(args, filter, exclude_filter).unwrap();
                     ()
                 }
                 Err(err) => {

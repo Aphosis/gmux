@@ -51,7 +51,14 @@ pub enum ApplicationCommands {
     /// the current pool.
     Pool(PoolSubcommand),
     /// Run any git command on every repository of the current pool.
-    Command(GitCommand),
+    Command {
+        #[structopt(short, long)]
+        exclude_filter: Option<String>,
+        #[structopt(short, long)]
+        filter: Option<String>,
+        #[structopt(subcommand)]
+        command: GitCommand,
+    },
 }
 
 #[derive(Debug, StructOpt)]

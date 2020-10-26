@@ -70,11 +70,11 @@ Print the pool repositories status:
 
 Print the pool repositories active branch that are not master or develop:
 
-`rit command --exclude-filter '(^(master|develop)$)' rev-parse --abbrev-ref HEAD`
+`rit command --exclude-filter '(master|develop)' rev-parse --abbrev-ref HEAD`
 
 Print the pool repositories ahead/behind commit count if there is any:
 
-`rit command --exclude-filter '(^0\s0$)' rev-list --left-right --count @...@{u}`
+`rit command --exclude-filter '0\s0' rev-list --left-right --count @...@{u}`
 
 Print the pool repositories commits to merge with commiter and time, from oldest to newest:
 
