@@ -1,4 +1,5 @@
 mod app;
+mod checkout;
 mod discovery;
 mod exceptions;
 mod git;
@@ -6,6 +7,7 @@ mod pool;
 mod repository;
 mod settings;
 pub use self::app::*;
+pub use self::checkout::*;
 pub use self::discovery::*;
 pub use self::exceptions::*;
 pub use self::git::*;
