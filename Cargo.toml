@@ -11,6 +11,7 @@ keywords = ["git", "dev"]
 categories = ["command-line-utilities", "development-tools"]
 
 [dependencies]
+colored = "2.0.0"
 config = "0.10.1"
 crc32fast = "1.2.1"
 dirs = "3.0.1"
