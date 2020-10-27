@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "Backtrace",
+        "gmux",
         "hasher",
         "revparse",
         "serde",
