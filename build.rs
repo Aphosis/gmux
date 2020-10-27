@@ -1,6 +1,5 @@
 use clap::Shell;
 use std::env;
-use std::fs;
 use std::path::Path;
 
 include!("src/app.rs");
@@ -8,14 +7,6 @@ include!("src/app.rs");
 const APP_NAME: &'static str = "gmux";
 
 fn main() {
-    let out_dir = match env::var_os("OUT_DIR") {
-        None => {
-            println!("cargo:warning=Could not find output dir, aborting completions generation.");
-            return;
-        }
-        Some(out_dir) => out_dir,
-    };
-
     // HACK: It's very much a hack to expose completion files as artifacts.
     // `cargo` does not support installing completions yet, but package
     // managers could, so it's desirable to generate them.
@@ -46,31 +37,10 @@ fn main() {
     app.gen_completions(
         APP_NAME,    // We need to specify the bin name manually
         Shell::Bash, // Then say which shell to build completions for
-        &out_dir,    // Then say where write the completions to
+        &target_dir, // Then say where write the completions to
     );
-    app.gen_completions(APP_NAME, Shell::Zsh, &out_dir);
-    app.gen_completions(APP_NAME, Shell::PowerShell, &out_dir);
-    app.gen_completions(APP_NAME, Shell::Fish, &out_dir);
-    app.gen_completions(APP_NAME, Shell::Elvish, &out_dir);
-
-    let completions = vec![
-        format!("{}.bash", APP_NAME),
-        format!("_{}", APP_NAME),
-        format!("_{}.ps1", APP_NAME),
-        format!("{}.fish", APP_NAME),
-        format!("{}.elv", APP_NAME),
-    ];
-
-    for filename in completions {
-        match fs::copy(
-            Path::new(&out_dir).join(&filename),
-            target_dir.join(&filename),
-        ) {
-            Ok(_) => (),
-            Err(err) => {
-                println!("cargo:warning=Error while copying completions: {}", err);
-                return;
-            }
-        }
-    }
+    app.gen_completions(APP_NAME, Shell::Zsh, &target_dir);
+    app.gen_completions(APP_NAME, Shell::PowerShell, &target_dir);
+    app.gen_completions(APP_NAME, Shell::Fish, &target_dir);
+    app.gen_completions(APP_NAME, Shell::Elvish, &target_dir);
 }
