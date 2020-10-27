@@ -1,5 +1,5 @@
 use super::{Error, Result};
-use config::Config;
+use config::{Config, FileFormat};
 use dirs::config_dir;
 use serde::{Deserialize, Serialize};
 use std::fs::{create_dir_all, File};
@@ -15,9 +15,10 @@ pub struct Settings {
 
 impl Settings {
     pub fn load() -> Result<Self> {
+        let default_settings = include_str!("Settings.toml");
         let mut settings = Config::default();
         settings
-            .merge(config::File::with_name("Settings.toml"))
+            .merge(config::File::from_str(default_settings, FileFormat::Yaml))
             .unwrap()
             .merge(config::Environment::with_prefix("RIT"))
             .unwrap();
