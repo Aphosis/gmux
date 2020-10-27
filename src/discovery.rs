@@ -1,4 +1,5 @@
 use super::{File, Pool, Repository, Result, Settings};
+use log::warn;
 use walkdir::WalkDir;
 
 pub struct DiscoveryManager;
@@ -35,9 +36,19 @@ impl DiscoveryManager {
             if entry.file_type().is_dir() {
                 let git_dir = entry.path().join(GIT_DIR);
                 if git_dir.is_dir() {
-                    let repository = Repository::from_path(&pool.root, entry.path().to_owned())?;
-                    repositories.push(repository);
-
+                    // FIXME: When refactoring error handling, we should match
+                    // on the return value to watch for relevant errors.
+                    // We are mainly trying to account for missing heads,
+                    // or missing fetch remotes.
+                    match Repository::from_path(&pool.root, entry.path().to_owned()) {
+                        Ok(repository) => {
+                            repositories.push(repository);
+                        }
+                        _ => warn!(
+                            "Failed to discover repository {}, does it contain commits yet ?",
+                            entry.path().display()
+                        ),
+                    }
                     iterator.skip_current_dir();
                 }
             } else if entry.file_type().is_file() {
