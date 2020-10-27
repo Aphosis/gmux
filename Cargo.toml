@@ -4,6 +4,7 @@ version = "0.1.2"
 authors = ["Aphosis <aphosis.github@gmail.com>"]
 edition = "2018"
 description = "Manage multiple git repositories with ease."
+readme = "README.md"
 license = "MIT"
 homepage = "https://github.com/Aphosis/gmux"
 repository = "https://github.com/Aphosis/gmux"
@@ -12,6 +13,11 @@ categories = ["command-line-utilities", "development-tools"]
 exclude = [
     ".vscode/*",
 ]
+
+[package.metadata.arch]
+arch = ["x86_64"]
+makedepends = ["cargo"]
+provides = ["gmux"]
 
 [dependencies]
 colored = "2.0.0"
