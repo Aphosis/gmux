@@ -9,9 +9,9 @@
             "request": "launch",
             "name": "Launch",
             "args": [],
-            "program": "${workspaceFolder}/target/debug/rit",
+            "program": "${workspaceFolder}/target/debug/gmux",
             "windows": {
-                "program": "${workspaceFolder}/target/debug/rit.exe"
+                "program": "${workspaceFolder}/target/debug/gmux.exe"
             },
             "cwd": "${workspaceFolder}",
             "stopOnEntry": false,

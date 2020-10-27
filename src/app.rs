@@ -47,7 +47,7 @@ pub enum GitCommand {
 pub enum ApplicationCommands {
     /// Create or manage a pool.
     ///
-    /// When run without a subcommand, `rit pool` will output
+    /// When run without a subcommand, `gmux pool` will output
     /// the current pool.
     Pool(PoolSubcommand),
     /// Run any git command on every repository of the current pool.
@@ -62,7 +62,7 @@ pub enum ApplicationCommands {
 }
 
 #[derive(Debug, StructOpt)]
-#[structopt(name = "rit")]
+#[structopt(name = "gmux")]
 /// Manage multiple git repositories with ease.
 pub struct Application {
     #[structopt(subcommand)]

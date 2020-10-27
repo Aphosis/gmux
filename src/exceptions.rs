@@ -24,7 +24,7 @@ impl fmt::Display for Error {
                 write!(f, "Settings file is invalid, do you have a home folder ?")
             }
             Error::NoCurrentPoolSet => {
-                write!(f, "No pool is currently set, create one using `rit pool new` or set an existing one with `rit pool set`.")
+                write!(f, "No pool is currently set, create one using `gmux pool new` or set an existing one with `gmux pool set`.")
             }
         }
     }

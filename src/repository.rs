@@ -104,7 +104,7 @@ impl fmt::Display for Remote {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-/// Represent a file outside of a repository, but still managed by rit.
+/// Represent a file outside of a repository, but still managed by gmux.
 pub struct File {
     /// Path to the file.
     /// This path is relative to the current pool root.

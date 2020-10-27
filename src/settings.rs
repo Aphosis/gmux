@@ -64,14 +64,14 @@ impl Settings {
 
     fn app_config_dir() -> Option<PathBuf> {
         match config_dir() {
-            Some(path) => Some(path.join("rit")),
+            Some(path) => Some(path.join("gmux")),
             None => None,
         }
     }
 
     fn user_config_file() -> Option<PathBuf> {
         if let Some(path) = Settings::app_config_dir() {
-            let user_settings_path = path.join("rit.toml");
+            let user_settings_path = path.join("gmux.toml");
             // Ensure this is a valid OS path.
             if let Some(_) = user_settings_path.to_str() {
                 return Some(user_settings_path);

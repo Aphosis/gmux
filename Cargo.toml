@@ -1,12 +1,12 @@
 [package]
-name = "rit"
+name = "gmux"
 version = "0.1.0"
 authors = ["Aphosis <aphosis.github@gmail.com>"]
 edition = "2018"
 description = "Manage multiple git repositories with ease."
 license = "MIT"
-homepage = "https://github.com/Aphosis/rit"
-repository = "https://github.com/Aphosis/rit"
+homepage = "https://github.com/Aphosis/gmux"
+repository = "https://github.com/Aphosis/gmux"
 keywords = ["git", "dev"]
 categories = ["command-line-utilities", "development-tools"]
 exclude = [

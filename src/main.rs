@@ -1,8 +1,8 @@
-use log::{debug, error, info};
-use rit::{
+use gmux::{
     Application, ApplicationCommands, CheckoutManager, DiscoveryManager, GitCaller, GitCommand,
     Pool, PoolCommands, Settings,
 };
+use log::{debug, error, info};
 use std::io::prelude::*;
 use structopt::StructOpt;
 

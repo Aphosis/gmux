@@ -231,6 +231,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 
 [[package]]
+name = "gmux"
+version = "0.1.0"
+dependencies = [
+ "colored",
+ "config",
+ "crc32fast",
+ "dirs",
+ "git2",
+ "glob",
+ "lazy_static",
+ "log",
+ "pretty_env_logger",
+ "regex",
+ "serde 1.0.117",
+ "serde_yaml",
+ "structopt",
+ "structopt-derive",
+ "toml",
+ "walkdir",
+]
+
+[[package]]
 name = "heck"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -537,28 +559,6 @@ name = "regex-syntax"
 version = "0.6.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8cab7a364d15cde1e505267766a2d3c4e22a843e1a601f0fa7564c0f82ced11c"
-
-[[package]]
-name = "rit"
-version = "0.1.0"
-dependencies = [
- "colored",
- "config",
- "crc32fast",
- "dirs",
- "git2",
- "glob",
- "lazy_static",
- "log",
- "pretty_env_logger",
- "regex",
- "serde 1.0.117",
- "serde_yaml",
- "structopt",
- "structopt-derive",
- "toml",
- "walkdir",
-]
 
 [[package]]
 name = "rust-argon2"
