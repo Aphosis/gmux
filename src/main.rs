@@ -45,6 +45,13 @@ fn main() {
                     },
                     Err(err) => report_error(err),
                 },
+                PoolCommands::Show => match Pool::from_current(&settings) {
+                    Ok(pool) => {
+                        debug!("Showing current pool.");
+                        info!("{:?}", &pool)
+                    }
+                    Err(err) => report_error(err),
+                },
                 PoolCommands::New { label, root } => match Pool::create(&mut settings, label, root)
                 {
                     Ok(pool) => info!("New pool {} created.", pool),

@@ -5,6 +5,8 @@ use structopt::StructOpt;
 pub enum PoolCommands {
     /// List existing pools.
     List,
+    /// Show the contents of the current pool.
+    Show,
     /// Create a new pool.
     New {
         label: String,
