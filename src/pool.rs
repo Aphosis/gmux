@@ -5,7 +5,6 @@ use serde_yaml::{from_reader, to_writer};
 use std::fmt;
 use std::path::PathBuf;
 
-// TODO: Exclude option
 #[derive(Debug, Serialize, Deserialize)]
 /// A collection of repositories and files to manage.
 pub struct Pool {
