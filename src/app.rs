@@ -1,7 +1,7 @@
+use clap::{Parser, Subcommand};
 use std::path::PathBuf;
-use structopt::StructOpt;
 
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Subcommand)]
 pub enum PoolCommands {
     /// List existing pools.
     List,
@@ -10,7 +10,7 @@ pub enum PoolCommands {
     /// Create a new pool.
     New {
         label: String,
-        #[structopt(parse(from_os_str))]
+        #[clap(parse(from_os_str))]
         root: Option<PathBuf>,
     },
     /// Set the current pool.
@@ -20,7 +20,7 @@ pub enum PoolCommands {
     /// This command only updates the pool configuration file, it does
     /// not however move the managed repositories.
     Move {
-        #[structopt(parse(from_os_str))]
+        #[clap(parse(from_os_str))]
         root: PathBuf,
     },
     /// Change the current pool label.
@@ -33,40 +33,37 @@ pub enum PoolCommands {
     Discover,
 }
 
-#[derive(Debug, StructOpt)]
-pub struct PoolSubcommand {
-    #[structopt(subcommand)]
-    pub command: Option<PoolCommands>,
-}
-
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Subcommand)]
 pub enum GitCommand {
-    #[structopt(external_subcommand)]
+    #[clap(external_subcommand)]
     Command(Vec<String>),
 }
 
-#[derive(Debug, StructOpt)]
+#[derive(Debug, Subcommand)]
 pub enum ApplicationCommands {
     /// Create or manage a pool.
     ///
     /// When run without a subcommand, `gmux pool` will output
     /// the current pool.
-    Pool(PoolSubcommand),
+    Pool {
+        #[clap(subcommand)]
+        pool_command: Option<PoolCommands>,
+    },
     /// Run any git command on every repository of the current pool.
     Command {
-        #[structopt(short, long)]
+        #[clap(short, long)]
         exclude_filter: Option<String>,
-        #[structopt(short, long)]
+        #[clap(short, long)]
         filter: Option<String>,
-        #[structopt(subcommand)]
+        #[clap(subcommand)]
         command: GitCommand,
     },
 }
 
-#[derive(Debug, StructOpt)]
-#[structopt(name = "gmux")]
+#[derive(Debug, Parser)]
+#[clap(author, version, about, name = "gmux")]
 /// Manage multiple git repositories with ease.
 pub struct Application {
-    #[structopt(subcommand)]
+    #[clap(subcommand)]
     pub command: ApplicationCommands,
 }

@@ -1,12 +1,14 @@
-use clap::Shell;
+use clap::IntoApp;
+use clap_complete::{generate_to, shells};
 use std::env;
+use std::io::Error;
 use std::path::Path;
 
 include!("src/app.rs");
 
 const APP_NAME: &'static str = "gmux";
 
-fn main() {
+fn main() -> Result<(), Error> {
     // HACK: It's very much a hack to expose completion files as artifacts.
     // `cargo` does not support installing completions yet, but package
     // managers could, so it's desirable to generate them.
@@ -17,7 +19,7 @@ fn main() {
     let manifest_dir = match env::var_os("CARGO_MANIFEST_DIR") {
         None => {
             println!("cargo:warning=Could not find manifest dir, aborting completions generation.");
-            return;
+            return Ok(());
         }
         Some(manifest_dir) => manifest_dir,
     };
@@ -25,22 +27,37 @@ fn main() {
     let profile = match env::var_os("PROFILE") {
         None => {
             println!("cargo:warning=Could not find profile, aborting completions generation.");
-            return;
+            return Ok(());
         }
         Some(profile) => profile,
     };
 
     let target_dir = Path::new(&manifest_dir).join("target").join(profile);
 
-    let mut app = Application::clap();
+    let mut app = Application::into_app();
 
-    app.gen_completions(
-        APP_NAME,    // We need to specify the bin name manually
-        Shell::Bash, // Then say which shell to build completions for
-        &target_dir, // Then say where write the completions to
+    let path = generate_to(shells::Bash, &mut app, APP_NAME, &target_dir)?;
+    println!(
+        "cargo:warning=bash completion file is generated: {:?}",
+        path
     );
-    app.gen_completions(APP_NAME, Shell::Zsh, &target_dir);
-    app.gen_completions(APP_NAME, Shell::PowerShell, &target_dir);
-    app.gen_completions(APP_NAME, Shell::Fish, &target_dir);
-    app.gen_completions(APP_NAME, Shell::Elvish, &target_dir);
+    let path = generate_to(shells::Zsh, &mut app, APP_NAME, &target_dir)?;
+    println!("cargo:warning=zsh completion file is generated: {:?}", path);
+    let path = generate_to(shells::Fish, &mut app, APP_NAME, &target_dir)?;
+    println!(
+        "cargo:warning=fish completion file is generated: {:?}",
+        path
+    );
+    let path = generate_to(shells::PowerShell, &mut app, APP_NAME, &target_dir)?;
+    println!(
+        "cargo:warning=powershell completion file is generated: {:?}",
+        path
+    );
+    let path = generate_to(shells::Elvish, &mut app, APP_NAME, &target_dir)?;
+    println!(
+        "cargo:warning=elvish completion file is generated: {:?}",
+        path
+    );
+
+    Ok(())
 }

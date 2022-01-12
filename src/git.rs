@@ -63,7 +63,7 @@ impl GitCaller {
                         LogLevel::Error => header.red(),
                         LogLevel::Info => header.blue(),
                     };
-                    let message = format!("{}\n{}", colored_header, output_log.message);
+                    let message = format!("{}\n{}\n", colored_header, output_log.message.trim());
                     Some(message)
                 } else {
                     None

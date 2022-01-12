@@ -1,10 +1,10 @@
-use gmux::{
-    Application, ApplicationCommands, CheckoutManager, DiscoveryManager, GitCaller, GitCommand,
-    Pool, PoolCommands, Settings,
-};
+use clap::Parser;
+use gmux::{CheckoutManager, DiscoveryManager, GitCaller, Pool, Settings};
 use log::{debug, error, info};
 use std::io::prelude::*;
-use structopt::StructOpt;
+
+mod app;
+use app::{Application, ApplicationCommands, GitCommand, PoolCommands};
 
 fn report_error(err: Box<dyn std::error::Error>) {
     debug!("{:#?}", err.source());
@@ -12,26 +12,27 @@ fn report_error(err: Box<dyn std::error::Error>) {
 }
 
 fn main() {
-    let app = Application::from_args();
+    let app = Application::parse();
     let mut settings = Settings::load().map_err(report_error).unwrap();
 
     pretty_env_logger::init();
 
     match app.command {
-        ApplicationCommands::Pool(subcommand) => match subcommand.command {
+        ApplicationCommands::Pool { pool_command } => match pool_command {
             None => match Pool::from_current(&settings) {
-                Ok(pool) => match std::io::stdout().write_all(format!("{}", pool.label).as_bytes())
-                {
-                    Ok(()) => (),
-                    Err(err) => report_error(err.into()),
-                },
+                Ok(pool) => {
+                    match std::io::stdout().write_all(format!("{}\n", pool.label).as_bytes()) {
+                        Ok(()) => (),
+                        Err(err) => report_error(err.into()),
+                    }
+                }
                 Err(err) => report_error(err),
             },
-            Some(pool_command) => match pool_command {
+            Some(pool_sub_command) => match pool_sub_command {
                 PoolCommands::List => match Pool::list(&settings) {
                     Ok(pools) => match std::io::stdout().write_all(
                         format!(
-                            "{}",
+                            "{}\n",
                             pools
                                 .into_iter()
                                 .map(|pool| pool.label)
