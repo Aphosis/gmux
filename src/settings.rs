@@ -2,6 +2,7 @@ use super::{Error, Result};
 use config::{Config, FileFormat};
 use dirs::config_dir;
 use serde::{Deserialize, Serialize};
+use std::env;
 use std::fs::{create_dir_all, File};
 use std::io::prelude::*;
 use std::path::PathBuf;
@@ -15,7 +16,7 @@ pub struct Settings {
 
 impl Settings {
     pub fn load() -> Result<Self> {
-        let default_settings = include_str!("Settings.toml");
+        let default_settings = include_str!("Settings.yml");
         let mut settings = Config::default();
         settings
             .merge(config::File::from_str(default_settings, FileFormat::Yaml))
@@ -64,6 +65,16 @@ impl Settings {
     }
 
     fn app_config_dir() -> Option<PathBuf> {
+        match env::var_os("GMUX_CONFIG_DIR") {
+            Some(path) => {
+                let config_path = PathBuf::from(path);
+                if config_path.is_dir() {
+                    return Some(config_path);
+                }
+                ()
+            }
+            None => (),
+        }
         match config_dir() {
             Some(path) => Some(path.join("gmux")),
             None => None,
