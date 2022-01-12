@@ -63,9 +63,7 @@ impl Pool {
         Ok(pools)
     }
     pub fn create(settings: &mut Settings, label: String, root: Option<PathBuf>) -> Result<Self> {
-        let pool_path = settings.store_full_path().join(&label);
-
-        if pool_path.is_file() {
+        if Pool::path(settings, &label).is_file() {
             return Err(Error::PoolAlreadyExists { label }.into());
         }
 
@@ -94,7 +92,7 @@ impl Pool {
     }
 
     pub fn from_label(settings: &Settings, label: String) -> Result<Self> {
-        let pool_path = settings.store_full_path().join(&label);
+        let pool_path = Pool::path(settings, &label);
 
         if !pool_path.is_file() {
             return Err(Error::PoolDoesNotExists { label }.into());
@@ -160,10 +158,12 @@ impl Pool {
     }
 
     pub fn save(&self, settings: &Settings) -> Result<()> {
-        let pool_path = settings.store_full_path().join(&self.label);
-        let writer = std::fs::File::create(pool_path)?;
+        let writer = std::fs::File::create(Pool::path(settings, &self.label))?;
 
         to_writer(writer, &self)?;
         Ok(())
+    }
+    fn path(settings: &Settings, label: &String) -> PathBuf {
+        settings.store_full_path().join(label).with_extension("yml")
     }
 }
