@@ -33,7 +33,8 @@ to ensure everyone is on the same page.
 
 ## Installation
 
-`gmux` is available on crates.io as well as the AUR.
+`gmux` is available on [crates.io](https://crates.io/crates/gmux)
+as well as the [AUR](https://aur.archlinux.org/packages/gmux/).
 
 Using cargo:
 
