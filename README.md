@@ -31,10 +31,31 @@ Whereas it's to bootstrap the cloning process, or to ensure multiple
 repositories track the same branches, you can share `gmux` configurations
 to ensure everyone is on the same page.
 
-However, you can also use it as a simple tool to query or edit multiple
-repositories using Git commands.
+## Installation
 
-## Examples
+`gmux` is available on crates.io as well as the AUR.
+
+Using cargo:
+
+```sh
+cargo install gmux
+```
+
+Using an AUR helper:
+
+```sh
+paru -S gmux
+```
+
+```sh
+yay -S gmux
+```
+
+```sh
+pacaur -S gmux
+```
+
+## Usage
 
 ### Pools
 
@@ -44,7 +65,7 @@ Print the current pool to the console:
 
 List all available pools:
 
-`gmux pool`
+`gmux pool list`
 
 Create a new pool, starting from the current directory:
 
@@ -60,7 +81,7 @@ Discover all repositories and files from the current pool directory:
 
 Clone, checkout branches and recreate files of the current pool:
 
-`gmux pool discover`
+`gmux pool checkout`
 
 ### Commands
 
